@@ -1,2 +1,13 @@
-
+stages:
+  - stage: CI-build
+    displayName: BuildStage
+    pool: arif
+    jobs: 
+      - job: buildjob
+        displayName: Build using Maven
+        steps: 
+          - task: Maven@4
+            inputs:
+              mavenPOMFile: 'pom.xml'
+              goals: package
     
