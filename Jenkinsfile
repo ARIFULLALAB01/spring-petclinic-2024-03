@@ -30,3 +30,4 @@ pipeline {
 
     }
 }
+// mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ARIFULLALAB01_spring-petclinic-2024-03
