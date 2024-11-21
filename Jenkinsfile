@@ -61,6 +61,12 @@ pipeline {
 				jf 'rt build-publish'
 			}
 		}
+        stage(DeployDecokerImage){
+            steps {
+                sh 'docker container run -d -P $DOCKER_IMAGE_NAME'
+                sh 'docker ps -a'
+            }
+        }
 
         // stage('build with sonar') {
         //     steps {
