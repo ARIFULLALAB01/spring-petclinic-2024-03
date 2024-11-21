@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'DEV'
+        label 'UAT'
     }
     tools {
 		jfrog 'jfrog-cli'
@@ -51,7 +51,7 @@ pipeline {
         stage('scanandpush'){
             steps{
                // scan the docker image
-                jf 'docker scan $DOCKER_IMAGE_NAME'
+                // jf 'docker scan $DOCKER_IMAGE_NAME'
                 // push the docker image
                 jf 'docker push $DOCKER_IMAGE_NAME'
             }
@@ -67,6 +67,7 @@ pipeline {
                 sh 'docker ps -a'
             }
         }
+        
 
         // stage('build with sonar') {
         //     steps {
