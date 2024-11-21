@@ -2,8 +2,12 @@ pipeline {
     agent {
         label 'DEV'
     }
+    tools {
+		jfrog 'jfrog-cli'
+	}
     environment {
         MAVEN_SETTINGS_CRED_ID = 'maven-settings-file'  // Replace with your credential ID
+        DOCKER_IMAGE_NAME = "trialkbljqt.jfrog.io/spc-docker-local/spc:${env.BUILD_ID}"
     }
     triggers {
         pollSCM('* * * * *')
@@ -38,6 +42,25 @@ pipeline {
                 sh 'mvn clean deploy -Dskiptest'
             }
         }
+
+        stage('dockerimagebuild'){
+            steps{
+                sh 'docker image build -t $DOCKER_IMAGE_NAME .'
+            }
+        }
+        stage('scanandpush'){
+            steps{
+               // scan the docker image
+                jf 'docker scan $DOCKER_IMAGE_NAME'
+                // push the docker image
+                jf 'docker push $DOCKER_IMAGE_NAME'
+            }
+        }
+        stage('Publish build info') {
+			steps {
+				jf 'rt build-publish'
+			}
+		}
 
         // stage('build with sonar') {
         //     steps {
