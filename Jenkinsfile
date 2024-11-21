@@ -63,7 +63,7 @@ pipeline {
 		}
         stage(DeployDecokerImage){
             steps {
-                sh 'docker container run -d -p 8080:8080 $DOCKER_IMAGE_NAME'
+                sh 'docker container run -d -P $DOCKER_IMAGE_NAME'
                 sh 'docker ps -a'
             }
         }
