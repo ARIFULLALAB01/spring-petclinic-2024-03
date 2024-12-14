@@ -1,8 +1,6 @@
-FROM maven:3.9.9-amazoncorretto-17-alpine
+FROM amazoncorretto:17-alpine3.17-jdk
 LABEL Director="Arif"
 LABEL ASSist-Director="Delli"
-COPY pom.xml .
-COPY . .
-RUN mvn clean package -Dskiptest
+ADD https://dhilleproject1.s3.ap-south-1.amazonaws.com/spring-petclinic-3.2.0-SNAPSHOT.jar ./spring-petclinic-3.2.0-SNAPSHOT.jar
 EXPOSE 8080
-CMD ["java", "-jar", "./target/*.jar"]
+CMD ["java", "-jar", "spring-petclinic-3.2.0-SNAPSHOT.jar"]
